@@ -8,6 +8,23 @@ variable "tags" {
   }
 }
 
+variable "env" {
+  description = "4 chars env name"
+  type        = string
+}
+
+variable "serverType" {
+  description = "3 chars server type"
+  type        = string
+  default     = "SRV"
+}
+
+variable "userDefinedString" {
+  description = "User defined portion of the server name. Up to 8 chars minus the postfix lenght"
+  type        = string
+  default     = "ADDS"
+}
+
 variable "deploy" {
   description = "Should resources in this module be deployed"
   default     = true
@@ -31,10 +48,6 @@ variable "reverse_Zone_Object" {
   default = ["2.250.10"]
 }
 
-variable "ad_prefix" {
-  default = "adds"
-}
-
 variable "public_ip" {
   description = "Should the VM be assigned public IP(s). True or false."
   default     = false
@@ -43,28 +56,26 @@ variable "public_ip" {
 variable "dnsServers" {
   default = ["168.63.129.16"]
 }
-variable "subnetName" {
-  default = "PwS3-Shared-PAZ-Openshift-RG"
+
+variable "subnet" {
+  description = "subnet object to which the VM NIC will connect to"
 }
 
-variable "vnetName" {
-  default = "PwS3-Infra-NetShared-VNET"
+variable "asg" {
+  description = "ASG resource to join the NIC to"
+  default     = null
 }
-variable "vnetResourceGroupName" {
-  default = "PwS3-Infra-NetShared-RG"
-}
+
 variable "rootDC1IPAddress" {}
 
-variable "rootDC2IPAddress" {
-  default = ""
-}
+variable "rootDC2IPAddress" {}
 
 variable "rootDC2IPAddress_allocation" {
   default = "Static"
 }
 
 variable "resourceGroup" {
-  default = "PwS3-GCInterrop-Openshift"
+  default = ""
 }
 
 variable "admin_username" {
