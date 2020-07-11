@@ -18,7 +18,7 @@ module "dc1" {
   postfix           = "01"
   location          = var.location
   resource_group    = var.resource_group
-  subnetName        = var.subnet
+  subnet            = var.subnet
   nic_ip_configuration = {
     private_ip_address            = [var.rootDC1IPAddress]
     private_ip_address_allocation = ["Static"]
@@ -48,7 +48,7 @@ module "dc2" {
   postfix           = "02"
   location          = var.location
   resource_group    = var.resource_group
-  subnetName        = var.subnet
+  subnet            = var.subnet
   nic_ip_configuration = {
     private_ip_address            = [var.rootDC2IPAddress]
     private_ip_address_allocation = ["Static"]
