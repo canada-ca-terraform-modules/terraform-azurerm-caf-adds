@@ -74,7 +74,7 @@ variable "rootDC2IPAddress_allocation" {
   default = "Static"
 }
 
-variable "resourceGroup" {
+variable "resource_group" {
   default = ""
 }
 

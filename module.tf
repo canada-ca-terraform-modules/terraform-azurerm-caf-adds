@@ -2,7 +2,7 @@ resource azurerm_availability_set availabilityset {
   count                        = var.deploy ? 1 : 0
   name                         = "${local.prefix}-as"
   location                     = var.location
-  resource_group_name          = var.resourceGroup.name
+  resource_group_name          = var.resource_group.name
   platform_fault_domain_count  = "2"
   platform_update_domain_count = "3"
   managed                      = "true"
@@ -16,8 +16,8 @@ module "dc1" {
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
   postfix           = "01"
-  location          = var.resourceGroup.location
-  resource_group    = var.resourceGroup
+  location          = var.location
+  resource_group    = var.resource_group
   subnetName        = var.subnet
   nic_ip_configuration = {
     private_ip_address            = [var.rootDC1IPAddress]
@@ -46,8 +46,8 @@ module "dc2" {
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
   postfix           = "02"
-  location          = var.resourceGroup.location
-  resource_group    = var.resourceGroup
+  location          = var.location
+  resource_group    = var.resource_group
   subnetName        = var.subnet
   nic_ip_configuration = {
     private_ip_address            = [var.rootDC2IPAddress]
