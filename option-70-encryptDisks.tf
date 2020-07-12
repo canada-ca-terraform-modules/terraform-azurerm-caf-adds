@@ -1,3 +1,6 @@
+# Disk encryption is done outside of the VM module because encrypting disk at VM deployment time vs post
+# ADDS domain creation will cause an ADDS deployment failure.
+
 /*
 Example:
 
