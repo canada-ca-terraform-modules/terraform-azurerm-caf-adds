@@ -10,7 +10,7 @@ resource azurerm_availability_set availabilityset {
 }
 
 module "dc1" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.2"
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
   deploy            = var.deploy
   env               = var.env
   serverType        = "SRV"
@@ -40,7 +40,7 @@ module "dc1" {
 }
 
 module "dc2" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.2"
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
   deploy            = var.deploy
   env               = var.env
   serverType        = "SRV"
