@@ -88,7 +88,9 @@ resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
                 },
                 "configurationArguments": {
                     "DomainName": "${var.ad_domain_name}",
-                    "DnsForwarder": "168.63.129.16"
+                    "DnsForwarder": "168.63.129.16",
+                    "DnsAlternate": "${var.rootDC1IPAddress}",
+                    "ReverseZoneObject": ${jsonencode(var.reverse_Zone_Object)}
                 }
             }
             SETTINGS
@@ -122,9 +124,10 @@ resource "azurerm_virtual_machine_extension" "addMgmtADSecondaryDC" {
                     "function": "ConfigureADNextDC"
                 },
                 "configurationArguments": {
-                    "domainName": "${var.ad_domain_name}",
+                    "DomainName": "${var.ad_domain_name}",
                     "DNSServer": "${var.rootDC1IPAddress}",
-                    "DnsForwarder": "${var.rootDC1IPAddress}"
+                    "DnsForwarder": "${var.rootDC1IPAddress}",
+                    "ReverseZoneObject": ${jsonencode(var.reverse_Zone_Object)}
                 }
             }
             SETTINGS
