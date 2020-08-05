@@ -7,6 +7,7 @@ Set-ExecutionPolicy Unrestricted -Force
 #
 # Install required DSC modules before we get started. 
 #
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Install-PackageProvider -Name NuGet -Force
 Install-Module -Name ComputerManagementDSC -Force
 Install-Module -Name xActiveDirectory -Force
