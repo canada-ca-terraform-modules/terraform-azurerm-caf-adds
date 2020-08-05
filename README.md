@@ -44,7 +44,6 @@ module "addsvms" {
   rootDC1IPAddress    = local.SRV-ADDS01_IP
   rootDC2IPAddress    = local.SRV-ADDS02_IP
   ad_domain_name      = var.domain.private.name
-  reverse_Zone_Object = var.vmConfigs.ADDS.reverse_Zone_Object
   public_ip           = false
   asg                 = azurerm_application_security_group.AD-Servers
   tags                = var.tags
@@ -63,7 +62,6 @@ module "addsvms" {
 | dependancyAgent         | bool   | no       | Installs the dependancy agent for service map integration. Default: false                                                                                                                      |
 | monitoringAgent         | object | no       | Configure Azure monitoring on VM. Requires configured log analytics workspace. - [monitoring agent](#monitoring-agent-object)                                                                  |
 | ad_domain_name          | string | yes      | Name of the desired Active Directory domain. Example: test.local                                                                                                                               |
-| reverse_Zone_Object     | list   | yes      | List of reverse zones to configure. Example: ["1.0.10","2.0.10"]                                                                                                                               |
 | public_ip               | bool   | no       | Does the VM require a public IP. true or false. Default: false                                                                                                                                 |
 | dnsServers              | list   | no       | List of DNS servers IP addresses as string to use for this NIC, overrides the VNet-level dns server list - [dns servers](#dns-servers-list)                                                    |
 | subnet                  | object | yes      | subnet object where the servers will be deployed to.                                                                                                                                           |
@@ -99,6 +97,8 @@ encryptDisks = {
 
 ## History
 
-| Date     | Release | Change      |
-| -------- | ------- | ----------- |
-| 20200711 | v1.0.0  | 1st release |
+| Date     | Release | Change                                               |
+| -------- | ------- | ---------------------------------------------------- |
+| 20200805 | v1.0.2  | Update DSC to fix win2016 deployment issue           |
+|          |         | Remove reverseZone since new DSC does not support it |
+| 20200711 | v1.0.0  | 1st release                                          |

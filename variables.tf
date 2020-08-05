@@ -44,10 +44,6 @@ variable "ad_domain_name" {
   default = "module.local"
 }
 
-variable "reverse_Zone_Object" {
-  default = ["2.250.10"]
-}
-
 variable "public_ip" {
   description = "Should the VM be assigned public IP(s). True or false."
   default     = false
