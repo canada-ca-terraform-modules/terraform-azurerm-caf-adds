@@ -31,7 +31,7 @@ module "dc1" {
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
   license_type         = "Windows_Server"
-  availability_set_id  = var.deploy ? azurerm_availability_set.availabilityset[0].id : null
+  availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
   dependancyAgent      = var.dependancyAgent
   public_ip            = false
@@ -61,7 +61,7 @@ module "dc2" {
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
   license_type         = "Windows_Server"
-  availability_set_id  = var.deploy ? azurerm_availability_set.availabilityset[0].id : null
+  availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
   dependancyAgent      = var.dependancyAgent
   public_ip            = false
