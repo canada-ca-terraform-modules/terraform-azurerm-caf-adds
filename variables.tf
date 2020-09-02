@@ -25,11 +25,6 @@ variable "userDefinedString" {
   default     = "ADDS"
 }
 
-variable "deploy" {
-  description = "Should resources in this module be deployed"
-  default     = true
-}
-
 variable "monitoringAgent" {
   description = "Should the VM be monitored"
   default     = null

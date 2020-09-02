@@ -1,5 +1,4 @@
 resource azurerm_availability_set availabilityset {
-  count                        = var.deploy ? 1 : 0
   name                         = "${local.prefix}-as"
   location                     = var.location
   resource_group_name          = var.resource_group.name
@@ -10,8 +9,7 @@ resource azurerm_availability_set availabilityset {
 }
 
 module "dc1" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
-  deploy            = var.deploy
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.1.1"
   env               = var.env
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
@@ -41,8 +39,7 @@ module "dc1" {
 }
 
 module "dc2" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
-  deploy            = var.deploy
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.1.1"
   env               = var.env
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
@@ -72,7 +69,6 @@ module "dc2" {
 }
 
 resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
-  count                = var.deploy ? 1 : 0
   name                 = "createMgmtADForest"
   virtual_machine_id   = module.dc1.vm.id
   publisher            = "Microsoft.Powershell"
@@ -107,7 +103,6 @@ resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
 }
 
 resource "azurerm_virtual_machine_extension" "addMgmtADSecondaryDC" {
-  count                = var.deploy ? 1 : 0
   name                 = "addMgmtADSecondaryDC"
   virtual_machine_id   = module.dc2.vm.id
   publisher            = "Microsoft.Powershell"
