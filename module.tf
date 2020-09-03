@@ -27,7 +27,7 @@ module "dc1" {
   admin_password       = var.admin_password
   custom_data          = base64encode(file("${path.module}/scripts/Configure-DSC.ps1"))
   priority             = var.priority
-  data_disk_sizes_gb   = [10]
+  # data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
   encryptDisks         = var.encryptDisks
@@ -58,7 +58,7 @@ module "dc2" {
   admin_password       = var.admin_password
   custom_data          = base64encode(file("${path.module}/scripts/Configure-DSC.ps1"))
   priority             = var.priority
-  data_disk_sizes_gb   = [10]
+  # data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
   encryptDisks         = var.encryptDisks
@@ -82,7 +82,7 @@ resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
             {
                 "WmfVersion": "latest",
                 "configuration": {
-                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.0.2/DSC/CreateADRootDC1.ps1.zip",
+                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.1.0/DSC/CreateADRootDC1.ps1.zip",
                     "script": "CreateADRootDC1.ps1",
                     "function": "CreateADRootDC1"
                 },
@@ -116,7 +116,7 @@ resource "azurerm_virtual_machine_extension" "addMgmtADSecondaryDC" {
             {
                 "WmfVersion": "latest",
                 "configuration": {
-                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.0.2/DSC/ConfigureADNextDC.ps1.zip",
+                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.1.0/DSC/ConfigureADNextDC.ps1.zip",
                     "script": "ConfigureADNextDC.ps1",
                     "function": "ConfigureADNextDC"
                 },
