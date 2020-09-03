@@ -97,3 +97,7 @@ variable "managed_disk_type" {
 variable "priority" {
   default = "Regular"
 }
+
+variable "encryptDisks" {
+  default = null
+}

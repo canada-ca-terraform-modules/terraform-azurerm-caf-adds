@@ -30,6 +30,7 @@ module "dc1" {
   data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
+  encryptDisks         = var.encryptDisks
   license_type         = "Windows_Server"
   availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
@@ -60,6 +61,7 @@ module "dc2" {
   data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
+  encryptDisks         = var.encryptDisks
   license_type         = "Windows_Server"
   availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
