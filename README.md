@@ -52,29 +52,28 @@ module "addsvms" {
 
 ## Variables Values
 
-| Name                    | Type   | Required | Value                                                                                                                                                                                          |
-| ----------------------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| location                | string | no       | Azure location for resources. Default: canadacentral                                                                                                                                           |
-| env                     | string | yes      | 4 chars env name                                                                                                                                                                               |
-| userDefinedString       | string | yes      | User defined portion of the server name. Up to 8 chars                                                                                                                                         |
-| tags                    | object | no       | Object containing a tag values - [tags pairs](#tag-object)                                                                                                                                     |
-| deploy                  | bool   | no       | Should resources in this module be deployed. This is usefull if you want to specify that a module should not be created without changing the terraform code across environments. Default: true |
-| dependancyAgent         | bool   | no       | Installs the dependancy agent for service map integration. Default: false                                                                                                                      |
-| monitoringAgent         | object | no       | Configure Azure monitoring on VM. Requires configured log analytics workspace. - [monitoring agent](#monitoring-agent-object)                                                                  |
-| ad_domain_name          | string | yes      | Name of the desired Active Directory domain. Example: test.local                                                                                                                               |
-| public_ip               | bool   | no       | Does the VM require a public IP. true or false. Default: false                                                                                                                                 |
-| dnsServers              | list   | no       | List of DNS servers IP addresses as string to use for this NIC, overrides the VNet-level dns server list - [dns servers](#dns-servers-list)                                                    |
-| subnet                  | object | yes      | subnet object where the servers will be deployed to.                                                                                                                                           |
-| rootDC1IPAddress        | string | yes      | Private IP assigned to the DC1 server                                                                                                                                                          |
-| rootDC2IPAddress        | string | yes      | Private IP assigned to the DC2 server                                                                                                                                                          |
-| resource_group          | object | yes      | Resourcegroup that will contain the VM resources                                                                                                                                               |
-| admin_username          | string | yes      | Name of the VM admin account                                                                                                                                                                   |
-| admin_password          | string | yes      | Password of the VM admin account                                                                                                                                                               |
-| vm_size                 | string | yes      | Specifies the desired size of the Virtual Machine. Eg: Standard_F4                                                                                                                             |
-| encryptDisks            | object | no       | Object containing keyvault information for disk encryption. - [encryptDisk](#encryptDisk-object)                                                                                               |
-| storage_image_reference | object | no       | Specify the storage image used to create the VM. Default is 2016-Datacenter. - [storage image](#storage-image-reference-object)                                                                |
-| managed_disk_type       | string | no       | Specify the type of managed storage to use for OS and Data disk. Default: "StandardSSD_LRS"                                                                                                    |
-| priority                | string | no       | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. Possible values are: Regular and Spot. Default: Regular                         |
+| Name                    | Type   | Required | Value                                                                                                                                                                  |
+| ----------------------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| location                | string | no       | Azure location for resources. Default: canadacentral                                                                                                                   |
+| env                     | string | yes      | 4 chars env name                                                                                                                                                       |
+| userDefinedString       | string | yes      | User defined portion of the server name. Up to 8 chars                                                                                                                 |
+| tags                    | object | no       | Object containing a tag values - [tags pairs](#tag-object)                                                                                                             |
+| dependancyAgent         | bool   | no       | Installs the dependancy agent for service map integration. Default: false                                                                                              |
+| monitoringAgent         | object | no       | Configure Azure monitoring on VM. Requires configured log analytics workspace. - [monitoring agent](#monitoring-agent-object)                                          |
+| ad_domain_name          | string | yes      | Name of the desired Active Directory domain. Example: test.local                                                                                                       |
+| public_ip               | bool   | no       | Does the VM require a public IP. true or false. Default: false                                                                                                         |
+| dnsServers              | list   | no       | List of DNS servers IP addresses as string to use for this NIC, overrides the VNet-level dns server list - [dns servers](#dns-servers-list)                            |
+| subnet                  | object | yes      | subnet object where the servers will be deployed to.                                                                                                                   |
+| rootDC1IPAddress        | string | yes      | Private IP assigned to the DC1 server                                                                                                                                  |
+| rootDC2IPAddress        | string | yes      | Private IP assigned to the DC2 server                                                                                                                                  |
+| resource_group          | object | yes      | Resourcegroup that will contain the VM resources                                                                                                                       |
+| admin_username          | string | yes      | Name of the VM admin account                                                                                                                                           |
+| admin_password          | string | yes      | Password of the VM admin account                                                                                                                                       |
+| vm_size                 | string | yes      | Specifies the desired size of the Virtual Machine. Eg: Standard_F4                                                                                                     |
+| encryptDisks            | object | no       | Object containing keyvault information for disk encryption. - [encryptDisk](#encryptDisk-object)                                                                       |
+| storage_image_reference | object | no       | Specify the storage image used to create the VM. Default is 2016-Datacenter. - [storage image](#storage-image-reference-object)                                        |
+| managed_disk_type       | string | no       | Specify the type of managed storage to use for OS and Data disk. Default: "StandardSSD_LRS"                                                                            |
+| priority                | string | no       | Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance. Possible values are: Regular and Spot. Default: Regular |
 
 ### encryptDisk object
 
@@ -97,8 +96,9 @@ encryptDisks = {
 
 ## History
 
-| Date     | Release | Change                                               |
-| -------- | ------- | ---------------------------------------------------- |
-| 20200805 | v1.0.2  | Update DSC to fix win2016 deployment issue           |
-|          |         | Remove reverseZone since new DSC does not support it |
-| 20200711 | v1.0.0  | 1st release                                          |
+| Date     | Release | Change                                                       |
+| -------- | ------- | ------------------------------------------------------------ |
+| 20200903 | v1.1.0  | Removing the need for datadisk and fix disk encryption issue |
+| 20200805 | v1.0.2  | Update DSC to fix win2016 deployment issue                   |
+|          |         | Remove reverseZone since new DSC does not support it         |
+| 20200711 | v1.0.0  | 1st release                                                  |

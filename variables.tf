@@ -25,11 +25,6 @@ variable "userDefinedString" {
   default     = "ADDS"
 }
 
-variable "deploy" {
-  description = "Should resources in this module be deployed"
-  default     = true
-}
-
 variable "monitoringAgent" {
   description = "Should the VM be monitored"
   default     = null
@@ -101,4 +96,8 @@ variable "managed_disk_type" {
 
 variable "priority" {
   default = "Regular"
+}
+
+variable "encryptDisks" {
+  default = null
 }

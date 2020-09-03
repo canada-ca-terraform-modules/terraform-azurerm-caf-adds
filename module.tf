@@ -1,5 +1,4 @@
 resource azurerm_availability_set availabilityset {
-  count                        = var.deploy ? 1 : 0
   name                         = "${local.prefix}-as"
   location                     = var.location
   resource_group_name          = var.resource_group.name
@@ -10,8 +9,7 @@ resource azurerm_availability_set availabilityset {
 }
 
 module "dc1" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
-  deploy            = var.deploy
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.1.1"
   env               = var.env
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
@@ -29,11 +27,12 @@ module "dc1" {
   admin_password       = var.admin_password
   custom_data          = base64encode(file("${path.module}/scripts/Configure-DSC.ps1"))
   priority             = var.priority
-  data_disk_sizes_gb   = [10]
+  # data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
+  encryptDisks         = var.encryptDisks
   license_type         = "Windows_Server"
-  availability_set_id  = var.deploy ? azurerm_availability_set.availabilityset[0].id : null
+  availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
   dependancyAgent      = var.dependancyAgent
   public_ip            = false
@@ -41,8 +40,7 @@ module "dc1" {
 }
 
 module "dc2" {
-  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.0.4"
-  deploy            = var.deploy
+  source            = "github.com/canada-ca-terraform-modules/terraform-azurerm-caf-windows_virtual_machine?ref=v1.1.1"
   env               = var.env
   serverType        = "SRV"
   userDefinedString = var.userDefinedString
@@ -60,11 +58,12 @@ module "dc2" {
   admin_password       = var.admin_password
   custom_data          = base64encode(file("${path.module}/scripts/Configure-DSC.ps1"))
   priority             = var.priority
-  data_disk_sizes_gb   = [10]
+  # data_disk_sizes_gb   = [10]
   os_managed_disk_type = var.managed_disk_type
   vm_size              = var.vm_size
+  encryptDisks         = var.encryptDisks
   license_type         = "Windows_Server"
-  availability_set_id  = var.deploy ? azurerm_availability_set.availabilityset[0].id : null
+  availability_set_id  = azurerm_availability_set.availabilityset.id
   monitoringAgent      = var.monitoringAgent
   dependancyAgent      = var.dependancyAgent
   public_ip            = false
@@ -72,7 +71,6 @@ module "dc2" {
 }
 
 resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
-  count                = var.deploy ? 1 : 0
   name                 = "createMgmtADForest"
   virtual_machine_id   = module.dc1.vm.id
   publisher            = "Microsoft.Powershell"
@@ -84,7 +82,7 @@ resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
             {
                 "WmfVersion": "latest",
                 "configuration": {
-                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.0.2/DSC/CreateADRootDC1.ps1.zip",
+                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.1.0/DSC/CreateADRootDC1.ps1.zip",
                     "script": "CreateADRootDC1.ps1",
                     "function": "CreateADRootDC1"
                 },
@@ -107,19 +105,19 @@ resource "azurerm_virtual_machine_extension" "createMgmtADForest" {
 }
 
 resource "azurerm_virtual_machine_extension" "addMgmtADSecondaryDC" {
-  count                = var.deploy ? 1 : 0
   name                 = "addMgmtADSecondaryDC"
   virtual_machine_id   = module.dc2.vm.id
   publisher            = "Microsoft.Powershell"
   type                 = "DSC"
   type_handler_version = "2.77"
-  depends_on           = [azurerm_virtual_machine_extension.createMgmtADForest]
+  depends_on           = [module.dc2]
+  # depends_on           = [azurerm_virtual_machine_extension.createMgmtADForest]
 
   settings           = <<SETTINGS
             {
                 "WmfVersion": "latest",
                 "configuration": {
-                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.0.2/DSC/ConfigureADNextDC.ps1.zip",
+                    "url": "https://raw.githubusercontent.com/canada-ca-terraform-modules/terraform-azurerm-caf-adds/v1.1.0/DSC/ConfigureADNextDC.ps1.zip",
                     "script": "ConfigureADNextDC.ps1",
                     "function": "ConfigureADNextDC"
                 },
