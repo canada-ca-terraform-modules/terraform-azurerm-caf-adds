@@ -110,7 +110,8 @@ resource "azurerm_virtual_machine_extension" "addMgmtADSecondaryDC" {
   publisher            = "Microsoft.Powershell"
   type                 = "DSC"
   type_handler_version = "2.77"
-  depends_on           = [azurerm_virtual_machine_extension.createMgmtADForest]
+  depends_on           = [module.dc2]
+  # depends_on           = [azurerm_virtual_machine_extension.createMgmtADForest]
 
   settings           = <<SETTINGS
             {
