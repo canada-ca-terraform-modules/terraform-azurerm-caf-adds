@@ -9,8 +9,8 @@ Set-ExecutionPolicy Unrestricted -Force
 #
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Install-PackageProvider -Name NuGet -Force
-Install-Module -Name ComputerManagementDSC -Force
-Install-Module -Name xActiveDirectory -Force
+Install-Module -Name ComputerManagementDSC -RequiredVersion 8.4.0 -Force
+Install-Module -Name xActiveDirectory -RequiredVersion 3.0.0.0 -Force
 Install-Module -Name xNetworking -Force
 Install-Module -Name xStorage -Force
 
