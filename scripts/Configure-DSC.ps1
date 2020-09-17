@@ -11,8 +11,8 @@ Set-ExecutionPolicy Unrestricted -Force
 Install-PackageProvider -Name NuGet -Force
 Install-Module -Name ComputerManagementDSC -RequiredVersion 8.4.0 -Force
 Install-Module -Name xActiveDirectory -RequiredVersion 3.0.0.0 -Force
-Install-Module -Name xNetworking -Force
-Install-Module -Name xStorage -Force
+Install-Module -Name xNetworking -RequiredVersion 5.7.0.0 -Force
+Install-Module -Name xStorage -RequiredVersion 3.4.0.0 -Force
 
 #
 # Server 2016 and later default to a very small swapfile on D, so small that the DSC modules
